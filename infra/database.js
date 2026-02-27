@@ -5,7 +5,7 @@ async function query(queryObject) {
   try {
     client = await getNewClient();
     const result = await client.query(queryObject);
-  
+
     return result;
   } catch (err) {
     console.error(err);
@@ -29,7 +29,6 @@ async function getNewClient() {
   await client.connect();
   return client;
 }
-
 
 export default {
   query,
