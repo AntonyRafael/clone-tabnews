@@ -22,16 +22,17 @@ function UpdatedAt() {
     refreshInterval: 2000,
   });
 
-  let updatedAtText = "Carregando..."
+  let updatedAtText = "Carregando...";
 
-  if (!isLoading && data) updatedAtText = new Date(data.updated_at).toLocaleString("pt-BR");
+  if (!isLoading && data)
+    updatedAtText = new Date(data.updated_at).toLocaleString("pt-BR");
 
   return (
     <div>
       <h3>Última atualização: {updatedAtText}</h3>
     </div>
   );
-};
+}
 
 function DatabaseStatus() {
   const { data, isLoading } = useSWR("/api/v1/status", fetchAPI, {
@@ -45,14 +46,17 @@ function DatabaseStatus() {
         <div>
           <ul>
             <li>Versão: {data.dependencies.database.version}</li>
-            <li>Conexões abertas: {data.dependencies.database.open_connections}</li>
-            <li>Conexões maximas: {data.dependencies.database.max_connections}</li>
+            <li>
+              Conexões abertas: {data.dependencies.database.open_connections}
+            </li>
+            <li>
+              Conexões maximas: {data.dependencies.database.max_connections}
+            </li>
           </ul>
         </div>
       )}
     </div>
   );
-};
-
+}
 
 export default StatusPage;
