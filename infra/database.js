@@ -8,11 +8,12 @@ async function query(queryObject) {
 
     return result;
   } catch (err) {
+    console.log("\n Erro dentro do database.js");
     console.error(err);
 
     throw err;
   } finally {
-    client.end();
+    client?.end();
   }
 }
 
