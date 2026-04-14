@@ -15,11 +15,15 @@ describe("POST /api/v1/users", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: "test",
-          email: "test@email.com",
-          password: "123456"
-        }, null, 2)
+        body: JSON.stringify(
+          {
+            username: "test",
+            email: "test@email.com",
+            password: "123456",
+          },
+          null,
+          2,
+        ),
       });
 
       expect(response.status).toBe(201);
@@ -33,7 +37,7 @@ describe("POST /api/v1/users", () => {
         password: "123456",
         updated_at: responseBody.updated_at,
         created_at: responseBody.created_at,
-      })
+      });
 
       expect(uuidVersion(responseBody.id)).toBe(4);
       expect(Date.parse(responseBody.created_at)).not.toBeNaN();
@@ -46,11 +50,15 @@ describe("POST /api/v1/users", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: "email-duplicated-1",
-          email: "duplicated@email.com",
-          password: "123456"
-        }, null, 2)
+        body: JSON.stringify(
+          {
+            username: "email-duplicated-1",
+            email: "duplicated@email.com",
+            password: "123456",
+          },
+          null,
+          2,
+        ),
       });
 
       expect(response1.status).toBe(201);
@@ -60,11 +68,15 @@ describe("POST /api/v1/users", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: "email-duplicated-2",
-          email: "Duplicated@email.com",
-          password: "123456"
-        }, null, 2)
+        body: JSON.stringify(
+          {
+            username: "email-duplicated-2",
+            email: "Duplicated@email.com",
+            password: "123456",
+          },
+          null,
+          2,
+        ),
       });
 
       expect(response2.status).toBe(400);
@@ -85,11 +97,15 @@ describe("POST /api/v1/users", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: "username-duplicated",
-          email: "username1@email.com",
-          password: "123456"
-        }, null, 2)
+        body: JSON.stringify(
+          {
+            username: "username-duplicated",
+            email: "username1@email.com",
+            password: "123456",
+          },
+          null,
+          2,
+        ),
       });
 
       expect(response1.status).toBe(201);
@@ -99,11 +115,15 @@ describe("POST /api/v1/users", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: "username-duplicated",
-          email: "username2@email.com",
-          password: "123456"
-        }, null, 2)
+        body: JSON.stringify(
+          {
+            username: "username-duplicated",
+            email: "username2@email.com",
+            password: "123456",
+          },
+          null,
+          2,
+        ),
       });
 
       expect(response2.status).toBe(400);

@@ -1,4 +1,8 @@
-import { InternalServerError, MethodNotAllowedError, ValidationError } from "./errors";
+import {
+  InternalServerError,
+  MethodNotAllowedError,
+  ValidationError,
+} from "./errors";
 
 function onNoMatchHandler(req, res) {
   const publicErrorObject = new MethodNotAllowedError();

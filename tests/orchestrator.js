@@ -29,7 +29,6 @@ async function runPendingMigrations() {
   await migrator.runPendingMigrations();
 }
 
-
 const orchestrator = {
   waitForAllServices,
   clearDatabase,
