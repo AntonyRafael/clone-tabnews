@@ -78,7 +78,7 @@ async function findOneByUsername(username) {
 
   return userFound;
 
-    async function runSelectQuery(username) {
+  async function runSelectQuery(username) {
     const result = await database.query({
       text: `
         SELECT 
