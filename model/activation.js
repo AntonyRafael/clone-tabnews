@@ -1,3 +1,4 @@
+import user from "model/user";
 import email from "infra/email.js";
 import database from "infra/database.js";
 import webserver from "infra/webserver.js";
@@ -65,19 +66,51 @@ async function finOneValidById(tokenId) {
 
     if (results.rowCount === 0) {
       throw new NotFoundError({
-        message: "O token de ativação utilizado não foi encontrado no sistema ou expirou.",
-        action: "Faça um novo cadastro."
-      })
+        message:
+          "O token de ativação utilizado não foi encontrado no sistema ou expirou.",
+        action: "Faça um novo cadastro.",
+      });
     }
 
     return results.rows[0];
   }
 }
 
+async function markTokenAsUsed(tokenId) {
+  const usedActivationToken = await runInsertQuery(tokenId);
+  return usedActivationToken;
+
+  async function runInsertQuery(tokenId) {
+    const results = await database.query({
+      text: `
+        UPDATE
+          user_activation_tokens
+        SET
+          used_at = timezone('utc', now()),
+          updated_at = timezone('utc', now())
+        WHERE
+          id = $1
+        RETURNING
+          *
+      ;`,
+      values: [tokenId],
+    });
+
+    return results.rows[0];
+  }
+}
+
+async function activateByUserId(userId) {
+  const activatedUser = await user.setFeatures(userId, ["create:session"]);
+  return activatedUser;
+}
+
 const activation = {
   sendEmailToUSer,
   create,
   finOneValidById,
+  markTokenAsUsed,
+  activateByUserId,
 };
 
 export default activation;
