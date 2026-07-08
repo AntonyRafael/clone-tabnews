@@ -95,8 +95,8 @@ function extractUUID(text) {
   return match ? match[0] : null;
 }
 
-async function activateUser(userObject) {
-  return await activation.activateByUserId(userObject.id);
+async function activateUser(inactiveUser) {
+  return await activation.activateByUserId(inactiveUser.id);
 }
 
 const orchestrator = {
