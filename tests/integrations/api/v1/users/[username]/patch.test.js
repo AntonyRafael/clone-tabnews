@@ -73,6 +73,50 @@ describe("PATCH /api/v1/users/[username]", () => {
       });
     });
 
+    test("With `user2` targeting `user1`", async () => {
+      await orchestrator.createUser({
+        username: "usernameTargeting1",
+      });
+
+      const createdUser2 = await orchestrator.createUser({
+        username: "usernameTargeting2",
+      });
+      const activatedUser2 = await orchestrator.activateUser(createdUser2);
+      const sessionObject2 = await orchestrator.createSession(
+        activatedUser2.id,
+      );
+
+      const response = await fetch(
+        "http://localhost:3000/api/v1/users/usernameTargeting1",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: `session_id=${sessionObject2.token}`,
+          },
+          body: JSON.stringify(
+            {
+              username: "usernameTargeting3",
+            },
+            null,
+            2,
+          ),
+        },
+      );
+
+      expect(response.status).toBe(403);
+
+      const responseBody = await response.json();
+
+      expect(responseBody).toEqual({
+        action:
+          "Verifique se você possui a feature necessária para atualizar outro usuário",
+        message: "Você não possui permissão para atualizar outro usuário!",
+        name: "ForbiddenError",
+        status_code: 403,
+      });
+    });
+
     test("With duplicated 'username'", async () => {
       await orchestrator.createUser({
         username: "username1",
