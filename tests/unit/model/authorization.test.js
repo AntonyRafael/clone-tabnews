@@ -1,6 +1,5 @@
 import authorization from "model/authorization";
 import { InternalServerError } from "infra/errors";
-import { password } from "pg/lib/defaults";
 
 describe("model/authorization", () => {
   describe(".can()", () => {
