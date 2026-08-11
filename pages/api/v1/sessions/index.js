@@ -1,11 +1,14 @@
 import { createRouter } from "next-connect";
 import controller from "infra/controllers";
 import authentication from "model/authentication";
+import authorization from "model/authorization";
 import session from "model/session";
+import { ForbiddenError } from "infra/errors";
 
 const router = createRouter();
 
-router.post(postHandler);
+router.use(controller.injectAnonymousOrUser);
+router.post(controller.canRequest("create:session"), postHandler);
 router.delete(deleteHandler);
 
 export default router.handler(controller.errorHandlers);
@@ -19,19 +22,39 @@ async function postHandler(req, res) {
     userInputValues.password,
   );
 
+  if (!authorization.can(authenticatedUser, "create:session")) {
+    throw new ForbiddenError({
+      message: "Você não possui permissão para realizar login.",
+      action: "Contate o suporte caso você acredite que isto seja um erro.",
+    });
+  }
+
   const newSession = await session.create(authenticatedUser.id);
 
   await controller.setSessionCookie(newSession.token, res);
 
-  return res.status(201).json(newSession);
+  const secureOutputValues = authorization.filterOutput(
+    authenticatedUser,
+    "read:session",
+    newSession,
+  );
+
+  return res.status(201).json(secureOutputValues);
 }
 
 async function deleteHandler(req, res) {
   const sessionToken = req.cookies.session_id;
+  const userTryingToDelete = req.context.user;
 
   const sessionObject = await session.findOneValidByToken(sessionToken);
-  const deletedSession = await session.expireById(sessionObject.id);
+  const expiredSession = await session.expireById(sessionObject.id);
   controller.clearSessionCookie(res);
 
-  return res.status(200).json(deletedSession);
+  const secureOutputValues = authorization.filterOutput(
+    userTryingToDelete,
+    "read:session",
+    expiredSession,
+  );
+
+  return res.status(200).json(secureOutputValues);
 }

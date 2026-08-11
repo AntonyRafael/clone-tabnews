@@ -16,6 +16,7 @@ describe("GET /api/v1/user", () => {
         username: "userWithValidSession",
       });
 
+      const activatedUser = await orchestrator.activateUser(createdUser);
       const sessionObject = await orchestrator.createSession(createdUser.id);
 
       const response = await fetch("http://localhost:3000/api/v1/user", {
@@ -38,8 +39,8 @@ describe("GET /api/v1/user", () => {
         id: createdUser.id,
         username: "userWithValidSession",
         email: createdUser.email,
-        password: createdUser.password,
-        updated_at: createdUser.updated_at.toISOString(),
+        features: ["create:session", "read:session", "update:user"],
+        updated_at: activatedUser.updated_at.toISOString(),
         created_at: createdUser.created_at.toISOString(),
       });
 
@@ -78,6 +79,7 @@ describe("GET /api/v1/user", () => {
         username: "validSessionAboutToExpire",
       });
 
+      const activatedUser = await orchestrator.activateUser(createdUser);
       const sessionObject = await orchestrator.createSession(createdUser.id);
 
       const response = await fetch("http://localhost:3000/api/v1/user", {
@@ -94,8 +96,8 @@ describe("GET /api/v1/user", () => {
         id: createdUser.id,
         username: "validSessionAboutToExpire",
         email: createdUser.email,
-        password: createdUser.password,
-        updated_at: createdUser.updated_at.toISOString(),
+        features: ["create:session", "read:session", "update:user"],
+        updated_at: activatedUser.updated_at.toISOString(),
         created_at: createdUser.created_at.toISOString(),
       });
 
