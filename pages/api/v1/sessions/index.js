@@ -17,7 +17,7 @@ async function postHandler(req, res) {
   const userInputValues = req.body;
   let authenticatedUser;
 
-  authenticatedUser = await authentication.getAuthenticatedUser(
+  authenticatedUser = await authentication.getUser(
     userInputValues.email,
     userInputValues.password,
   );
