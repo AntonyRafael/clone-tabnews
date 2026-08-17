@@ -83,9 +83,7 @@ describe("PATCH /api/v1/users/[username]", () => {
         username: "usernameTargeting2",
       });
       const activatedUser2 = await orchestrator.activateUser(createdUser2);
-      const sessionObject2 = await orchestrator.createSession(
-        activatedUser2,
-      );
+      const sessionObject2 = await orchestrator.createSession(activatedUser2);
 
       const response = await fetch(
         `${webserver.origin}/api/v1/users/usernameTargeting1`,

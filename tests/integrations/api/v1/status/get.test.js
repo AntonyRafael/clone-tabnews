@@ -48,7 +48,6 @@ describe("GET /api/v1/status", () => {
     });
   });
 
-
   describe("Privileged user", () => {
     test("With `read:status:all`", async () => {
       const privilegedUser = await orchestrator.createUser();
