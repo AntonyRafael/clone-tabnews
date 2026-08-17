@@ -83,8 +83,8 @@ describe("model/authorization", () => {
         id: 1,
         username: "resource",
         features: ["read:user"],
-        created_at: "2026-0101T00:00:00.00Z",
-        updated_at: "2026-0101T00:00:00.00Z",
+        created_at: "2026-01-01T00:00:00.000Z",
+        updated_at: "2026-01-01T00:00:00.000Z",
         password: "1234456",
         email: "resource@email.com",
       };
@@ -99,8 +99,8 @@ describe("model/authorization", () => {
         id: 1,
         username: "resource",
         features: ["read:user"],
-        created_at: "2026-0101T00:00:00.00Z",
-        updated_at: "2026-0101T00:00:00.00Z",
+        created_at: "2026-01-01T00:00:00.000Z",
+        updated_at: "2026-01-01T00:00:00.000Z",
       });
     });
   });

@@ -5,19 +5,17 @@ import authorization from "model/authorization";
 import session from "model/session";
 import { ForbiddenError } from "infra/errors";
 
-const router = createRouter();
-
-router.use(controller.injectAnonymousOrUser);
-router.post(controller.canRequest("create:session"), postHandler);
-router.delete(deleteHandler);
-
-export default router.handler(controller.errorHandlers);
+export default createRouter()
+  .use(controller.injectAnonymousOrUser)
+  .post(controller.canRequest("create:session"), postHandler)
+  .delete(deleteHandler)
+  .handler(controller.errorHandlers);
 
 async function postHandler(req, res) {
   const userInputValues = req.body;
   let authenticatedUser;
 
-  authenticatedUser = await authentication.getAuthenticatedUser(
+  authenticatedUser = await authentication.getUser(
     userInputValues.email,
     userInputValues.password,
   );
@@ -31,7 +29,7 @@ async function postHandler(req, res) {
 
   const newSession = await session.create(authenticatedUser.id);
 
-  await controller.setSessionCookie(newSession.token, res);
+  controller.setSessionCookie(newSession.token, res);
 
   const secureOutputValues = authorization.filterOutput(
     authenticatedUser,
