@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "@primer/react";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -53,7 +54,9 @@ export default function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Cadastrar</button>
+        <Button type="submit" variant="primary">
+          Cadastrar
+        </Button>
       </form>
     </div>
   );
