@@ -1,1 +1,1 @@
-# clone-tabnews
+# nyfar-news
