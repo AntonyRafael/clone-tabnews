@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@primer/react";
+import { Heading, Button, FormControl, TextInput, Stack } from "@primer/react";
 import DefaultLayout from "interface/DefaultLayout";
 
 export default function RegisterPage() {
@@ -7,6 +7,32 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  return (
+    <DefaultLayout
+      metadata={{
+        title: "Cadastro de Usuário",
+        description: "Crie sua conta de forma gratuita."
+      }}
+      contentWidth="small"
+    >
+      <Stack gap="spacious">
+        <Heading as="h1">Cadastro</Heading>
+
+        <RegisterForm
+          username={username}
+          setUsername={setUsername}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+        />
+      </Stack>
+
+    </DefaultLayout>
+  );
+}
+
+function RegisterForm({ username, setUsername, email, setEmail, password, setPassword }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,43 +51,45 @@ export default function RegisterPage() {
   };
 
   return (
-    <DefaultLayout metadata={{
-      title: "Cadastro de Usuário",
-      description: "Crie sua conta de forma gratuita."
-    }}>
-      <h1>Cadastro de Usuário</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Nome:</label>
-          <input
+    <form onSubmit={handleSubmit}>
+      <Stack gap="normal">
+        <FormControl>
+          <FormControl.Label htmlFor="username">Nome</FormControl.Label>
+          <TextInput
             type="text"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            block
           />
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
+        </FormControl>
+        <FormControl>
+          <FormControl.Label htmlFor="email">Email</FormControl.Label>
+          <TextInput
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            block
           />
-        </div>
-        <div>
-          <label htmlFor="password">Senha:</label>
-          <input
+        </FormControl>
+        <FormControl>
+          <FormControl.Label htmlFor="password">Senha</FormControl.Label>
+          <TextInput
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            block
           />
-        </div>
-        <Button type="submit" variant="primary">
-          Cadastrar
-        </Button>
-      </form>
-    </DefaultLayout>
+        </FormControl>
+
+        <Stack.Item>
+          <Button type="submit" variant="primary">
+            Cadastrar
+          </Button>
+        </Stack.Item>
+      </Stack>
+    </form>
   );
 }
