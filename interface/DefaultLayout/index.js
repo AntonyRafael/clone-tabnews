@@ -2,17 +2,23 @@ import Head from "next/head";
 import { PageLayout, Header, Text } from "@primer/react";
 import styles from "./index.module.css";
 
-const contentWidthClasses =  {
+const contentWidthClasses = {
   small: styles.smallContent,
 };
 
-export default function DefaultLayout({ children, metadata = {}, contentWidth = "large" }) {
+export default function DefaultLayout({
+  children,
+  metadata = {},
+  contentWidth = "large",
+}) {
   const extraContentClassName = contentWidthClasses[contentWidth] || "";
-  
+
   return (
     <>
       <Head>
-        <title>{metadata.title ? `${metadata.title} · NyfarNews` : "NyfarNews"}</title>
+        <title>
+          {metadata.title ? `${metadata.title} · NyfarNews` : "NyfarNews"}
+        </title>
         {metadata.description && (
           <meta name="description" value={metadata.description} />
         )}
@@ -31,11 +37,16 @@ export default function DefaultLayout({ children, metadata = {}, contentWidth = 
       </Header>
 
       <PageLayout>
-        <PageLayout.Content width={contentWidth} className={extraContentClassName}>
+        <PageLayout.Content
+          width={contentWidth}
+          className={extraContentClassName}
+        >
           {children}
         </PageLayout.Content>
         <PageLayout.Footer divider="line">
-          <Text size="small">&copy; {new Date().getFullYear()} NyfarNews. All rights reserved.</Text>
+          <Text size="small">
+            &copy; {new Date().getFullYear()} NyfarNews. All rights reserved.
+          </Text>
         </PageLayout.Footer>
       </PageLayout>
     </>

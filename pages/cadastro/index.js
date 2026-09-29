@@ -11,7 +11,7 @@ export default function RegisterPage() {
     <DefaultLayout
       metadata={{
         title: "Cadastro de Usuário",
-        description: "Crie sua conta de forma gratuita."
+        description: "Crie sua conta de forma gratuita.",
       }}
       contentWidth="small"
     >
@@ -27,12 +27,18 @@ export default function RegisterPage() {
           setPassword={setPassword}
         />
       </Stack>
-
     </DefaultLayout>
   );
 }
 
-function RegisterForm({ username, setUsername, email, setEmail, password, setPassword }) {
+function RegisterForm({
+  username,
+  setUsername,
+  email,
+  setEmail,
+  password,
+  setPassword,
+}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
