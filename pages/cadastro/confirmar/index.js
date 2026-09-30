@@ -5,8 +5,7 @@ export default function ConfirmRegisterPage() {
   return (
     <DefaultLayout
       metadata={{
-        title: "Cadastro de Usuário",
-        description: "Crie sua conta de forma gratuita.",
+        title: "Confirmar Conta",
       }}
       contentWidth="small"
     >
